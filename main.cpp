@@ -1,3 +1,6 @@
+// Javier Arteaga
+// 11/15/25
+// MCSCI-272
 /**
  * @file main.cpp
  * @brief Main client program for the ShapeFile Parser.
@@ -59,46 +62,64 @@ int main() {
     // that catches a ParseException.
     
     // Read from the file one "word" at a time
+
     while (file >> shapeType) {
-        lineNumber++;
+        try {
+            lineNumber++;
 
-        if (shapeType == "square") {
-            double side;
-            file >> side;
-            
-            // STUDENT TODO: Wrap the call to calculateArea in a 
-            // try...catch block to handle std::invalid_argument.
-            double area = calculateArea(side); // Call library function
-            cout << "Line " << lineNumber << ": Square Area: " << area << endl;
+            if (shapeType == "square") {
+                double side;
+                file >> side;
 
-        }
-        else if (shapeType == "rectangle") {
-            double length, width;
-            file >> length >> width;
-            
-            // STUDENT TODO: Wrap the call to calculateArea in a 
-            // try...catch block to handle std::invalid_argument.
-            double area = calculateArea(length, width); // Call overloaded library function
-            cout << "Line " << lineNumber << ": Rectangle Area: " << area << endl;
-        }
-        else if (shapeType == "circle") {
-            double radius;
-            file >> radius;
+                // STUDENT TODO: Wrap the call to calculateArea in a
+                // try...catch block to handle std::invalid_argument.
+                try {
+                    double area = calculateArea(side); // Call library function
+                    cout << "Line " << lineNumber << ": Square Area: " << area << endl;
+                } catch (std::invalid_argument &e) {
+                    cerr << e.what() << endl;
+                }
+            }
+            else if (shapeType == "rectangle") {
+                double length, width;
+                file >> length >> width;
 
-            // STUDENT TODO: Wrap the call to calculateCircleArea in a 
-            // try...catch block to handle std::invalid_argument.
-            double area = calculateCircleArea(radius); // Call library function
-            cout << "Line " << lineNumber << ": Circle Area: " << area << endl;
-        }
-        else {
-            // STUDENT TODO: Replace this 'cerr' statement with a 
-            // 'throw ParseException("Unknown shape type: " + shapeType, lineNumber);'
-            cerr << "Line " << lineNumber << ": Error: Unknown shape type: " << shapeType << endl;
+                // STUDENT TODO: Wrap the call to calculateArea in a
+                // try...catch block to handle std::invalid_argument.
+                try {
+                    double area = calculateArea(length, width); // Call overloaded library function
+                    cout << "Line " << lineNumber << ": Rectangle Area: " << area << endl;
+                } catch (std::invalid_argument &e) {
+                    cerr << e.what() << endl;
+                }
+            }
+            else if (shapeType == "circle") {
+                double radius;
+                file >> radius;
+
+                // STUDENT TODO: Wrap the call to calculateCircleArea in a
+                // try...catch block to handle std::invalid_argument.
+                try {
+                    double area = calculateCircleArea(radius); // Call library function
+                    cout << "Line " << lineNumber << ": Circle Area: " << area << endl;
+                } catch (std::invalid_argument &e) {
+                    cerr << e.what() << endl;
+                }
+            }
+            else {
+                // STUDENT TODO: Replace this 'cerr' statement with a
+                throw ParseException("Line " + std::to_string(lineNumber) + ": Error: Unknown shape type: " + shapeType);
+                //throw ParseException("Unknown shape type: " + shapeType + " | On line: " + std::to_string(lineNumber));
+                //cerr << "Line " << lineNumber << ": Error: Unknown shape type: " << shapeType << endl;
+            }
+        } catch (const ParseException& e) {
+            cerr << e.what() << endl;
+        } catch (const FileOpenException& e) {
+            cerr << e.what() << endl;
+        } catch (const std::exception& e) {
+            cerr << e.what() << endl;
         }
     }
-    
-    // The catch block for ParseException should go here.
-    // catch (const ParseException& e) { ... }
 
 
     // --- 3. Cleanup ---

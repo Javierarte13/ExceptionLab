@@ -1,6 +1,8 @@
 //
 // Created by Christopher Vaughn on 10/29/25.
-//
+// Javier Arteaga
+// 11/15/25
+// MCSCI-272
 
 #ifndef ERRORHANDLING_UTILITIES_H
 #define ERRORHANDLING_UTILITIES_H

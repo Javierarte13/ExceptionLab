@@ -1,6 +1,8 @@
 //
 // Created by Christopher Vaughn on 10/29/25.
-//
+// Javier Arteaga
+// 11/15/25
+// MCSCI-272
 /**
  * @file GeometryUtils.h
  * @brief Declares a library of utility functions for calculating shape areas.

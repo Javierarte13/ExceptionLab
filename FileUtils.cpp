@@ -17,7 +17,9 @@
 #include <fstream>          // For ifstream
 
 using namespace std;
-
+// Javier Arteaga
+// 11/15/25
+// MCSCI-272
 /**
  * @brief Attempts to open a file, handling failures and retries.
  * * This function contains the logic that the student must
@@ -31,7 +33,28 @@ void openFileForReading(std::ifstream& file, std::string initialFilename) {
     // STUDENT TODO: Replace the following 'if' block with a
     // try...catch block that throws and catches a FileOpenException.
 
-    file.open(initialFilename);
+    try {
+        file.open(initialFilename);
+        if (!file.is_open()) {
+            throw FileOpenException("Error: File could not be opened: " + initialFilename);
+        }
+        cout << "File opened successfully: " << initialFilename << endl;
+    } catch (FileOpenException &ex) {
+        cerr << ex.what() << endl;
+        string alternativeFilename;
+        cout << "Enter alternative filename: ";
+        cin >> alternativeFilename;
+        file.open(alternativeFilename);
+
+        if (!file.is_open()) {
+            cerr << "Error: Failed to open alternative file. Exiting." << endl;
+            // In a real program, you might throw a PersistentFileError here,
+            // but for this lab, we will just exit.
+            exit(1); // Exit the program with an error code
+        }
+        cout << "Alternative file opened successfully: " << alternativeFilename << endl;
+    }
+    /*file.open(initialFilename);
     if (!file.is_open()) {
         cerr << "Error: File could not be opened: " << initialFilename << endl;
 
@@ -50,6 +73,6 @@ void openFileForReading(std::ifstream& file, std::string initialFilename) {
         cout << "Alternative file opened successfully: " << alternativeFilename << endl;
     } else {
         cout << "File opened successfully: " << initialFilename << endl;
-    }
+    }*/
 }
 

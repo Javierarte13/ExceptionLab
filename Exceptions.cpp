@@ -1,3 +1,6 @@
+// Javier Arteaga
+// 11/15/25
+// MCSCI-272
 /**
 * @file Exceptions.cpp
  * @brief Implements the custom exception classes.
@@ -27,4 +30,3 @@ const char* ParseException::what() const noexcept {
     // .c_str() returns a const char* representation of the std::string
     return msg.c_str();
 }
-

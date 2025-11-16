@@ -1,3 +1,6 @@
+// Javier Arteaga
+// 11/15/25
+// MCSCI-272
 /**
  * @file Exceptions.h
  * @brief Declares custom exception classes for the shape parser.
